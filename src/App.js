@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+import Home from "./pages/Home"
+import Cars from "./pages/Cars"
+import SingleCar from "./pages/SingleCar"
+import Error from "./pages/Error"
+
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
+import {BrowserRouter, Routes, Route } from "react-router-dom";
+import {CarProvider} from "./context";
+
+import './App.scss';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CarProvider>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/cars/" element={<Cars />} />
+          <Route exact path="/cars/:link" element={<SingleCar />} />
+          <Route path="*" element={<Error />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </CarProvider>
   );
 }
 
