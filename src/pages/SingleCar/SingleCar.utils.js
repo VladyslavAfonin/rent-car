@@ -1,0 +1,1 @@
+export const priceHeaders = ["Period", "from 1 month", "10-29 days", "4-9 days", "1-3 days", "Deposit"];

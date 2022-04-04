@@ -1,5 +1,5 @@
 import React from 'react'
-import Car from './Car'
+import DisplayCars from './DisplayCars'
 import emptySearch from "../images/empty-search.svg"
 
 export default function CarList({cars}) {
@@ -14,11 +14,7 @@ export default function CarList({cars}) {
   return (
     <div className="cars">
       <div className="cars__list">
-        {
-          cars.map(item => {
-            return <Car key={item.id} car={item} />
-          })
-        }
+          <DisplayCars cars={cars}/>
       </div>
     </div>
   )

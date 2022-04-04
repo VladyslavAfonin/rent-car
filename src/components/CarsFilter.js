@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import { CarContext } from '../context'
+import { CarContext } from '../services/context'
 import Title from './Title'
 import StickyBox from "react-sticky-box";
 

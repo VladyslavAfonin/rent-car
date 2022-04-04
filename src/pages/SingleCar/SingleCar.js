@@ -1,18 +1,16 @@
-import React, { useContext } from 'react'
-import Title from "../components/Title"
-import { Link, useParams } from 'react-router-dom'
-import { CarContext } from '../context'
-import errorImg from "../images/404.svg"
+import React from 'react'
+import Title from "components/Title"
+import { Link } from 'react-router-dom'
+import errorImg from "images/404.svg"
 import { Carousel } from 'react-carousel-minimal';
+import { useSingleCar } from './SingleCar.hook';
+import { priceHeaders } from './SingleCar.utils';
 
 export default function SingleCar() {
-  const contextType = useContext(CarContext);
-  const {link} = useParams(); 
 
-  const { getCar } = contextType;
-  const car = getCar(link);
+  const {displayNotFound, name, description, characteristics, carImages, priceValues} = useSingleCar();
 
-  if (!car) {
+  if (displayNotFound) {
     return (
       <div className="automobile automobile-error">
         <div className="automobile__container container">
@@ -25,18 +23,6 @@ export default function SingleCar() {
       </div>
     );
   }
-
-  const {name, description, price, oneMonthPrice, tenDaysPrice, threeDaysPrice, characteristics, images} = car;
-  
-  const carImages = images.map(item => {
-    return {
-      image: item
-    }
-  })
-
-
-  const priceHeaders = ["Period", "from 1 month", "10-29 days", "4-9 days", "1-3 days", "Deposit"];
-  const priceValues = ["Price per day", `${oneMonthPrice}$`, `${tenDaysPrice}$`, `${threeDaysPrice}$`, `${price}$`, "500$"];
 
   return (
     <div className="automobile">

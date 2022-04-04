@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Client from "./Contentful"
+import Client from "../Contentful"
 
 const CarContext = React.createContext();
 

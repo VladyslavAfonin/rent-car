@@ -1,13 +1,13 @@
 import React from 'react'
 
-export default function Hero({children, hero}) {
+export default function Hero({children, className}) {
   return (
-    <section className={hero}>
+    <section className={className}>
         {children}
     </section>
   )
 }
 
 Hero.defaultProps = {
-    hero: "hero"
+    className: "hero"
 }

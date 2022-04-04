@@ -1,7 +1,7 @@
 import React from 'react'
 import CarsFilter from "./CarsFilter.js"
 import CarsList from "./CarsList.js"
-import { CarConsumer } from '../context.js'
+import { CarConsumer } from '../services/context.js'
 import Loading from './Loading.js'
 
 export default function CarsContainer() {

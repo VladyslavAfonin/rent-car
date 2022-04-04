@@ -1,23 +1,21 @@
 import React, { Component } from 'react'
-import { CarContext } from '../context'
+import { CarContext } from '../services/context'
 import Loading from './Loading';
-import Car from './Car';
 import Title from './Title';
+import DisplayCars from './DisplayCars';
 
 export default class FeaturedCars extends Component {
     static contextType = CarContext;
+
     render() {
-        let {loading, featuredCars: cars} = this.context;
-        cars = cars.map(car => {
-            return <Car key={car.id} car={car} />
-        })
+        let {loading, featuredCars} = this.context;
 
         return (
             <section className="featured">
                 <div className="featured__container container">
                     <Title title="GREAT RENTAL OFFERS FOR YOU" />
                     <div className="featured__list">
-                        {loading ? <Loading /> : cars}  
+                        {loading ? <Loading /> : <DisplayCars cars={featuredCars}/>}  
                     </div>
                 </div>
             </section>
