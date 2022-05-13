@@ -1,5 +1,13 @@
 import React, { Component } from 'react'
-import Client from "../Contentful"
+import Contentstack from "contentstack/react-native"
+
+const Stack = Contentstack.Stack({ 
+    "api_key": "blt8cf190e51862a6ab", 
+    "delivery_token": "csaf96efba31098e1d40310977", 
+    "environment": "staging"
+});
+
+const Query = Stack.ContentType('car_item').Query();
 
 const CarContext = React.createContext();
 
@@ -18,46 +26,36 @@ class CarProvider extends Component {
         manual: false
     };
 
-    getData = async() => {
+    getData = async () => {
         try {
-            let response = await Client.getEntries({
-                content_type: "cars",
-                order: "fields.price"
-            })
-            let cars = this.formatData(response.items);
-            let featuredCars = cars.filter(car => car.featured === true);
+            await Query
+                .only(['title', 'name', 'link', 'description', 'type', 'auto', 'manual', 'featured', 'capacity', 'price', 'onemonthprice', 'tendaysprice', 'threedaysprice', 'images', 'characteristics', 'extras'])
+                .toJSON()
+                .find()
+                    .then((result) => {
+                        let cars = result[0];
+                        console.log(cars);
+                        let featuredCars = cars.filter(car => car.featured === true);
+                        let maxPrice = Math.max(...cars.map(item => item.price));
 
-            let maxPrice = Math.max(...cars.map(item => item.price));
-
-            this.setState({
-                cars: cars,
-                featuredCars: featuredCars,
-                sortedCars: cars,
-                loading: false,
-                price: maxPrice,
-                maxPrice: maxPrice
-            })
-        } catch(error) {
-            console.log(error);
-        }
+                        this.setState({
+                            cars: cars,
+                            featuredCars: featuredCars,
+                            sortedCars: cars,
+                            loading: false,
+                            price: maxPrice,
+                            maxPrice: maxPrice
+                        })
+                    }, function error(err) {
+                        console.log("Something went wrong!");
+                    });
+        } catch (err) {
+            console.log(err);
+        }   
     }
 
     componentDidMount(){
         this.getData();
-    }
-
-    formatData(items){
-        let tempItems = items.map(item => {
-            let id = item.sys.id;
-            let images = item.fields.images.map(image => image.fields.file.url);
-            let car = {
-                ...item.fields, 
-                images: images,
-                id: id
-            };
-            return car;
-        })
-        return tempItems;
     }
 
     getCar = link => {

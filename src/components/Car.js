@@ -1,15 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import defaultImg from "../images/hero-bg.jpg"
-import PropTypes from 'prop-types'
 import { CARS_ROUTE } from 'common/routes';
 
 export default function Car({car}) {
     const {name, link, images, price, extras, description} = car;
 
-    const elements = extras.map((item, index) => {
+    const elements = extras[0].children.map((item, index) => {
         return <div key={index} className="car__details-item">
-            {item}
+            {item.children[0].text}
         </div>
     })
 
@@ -17,7 +16,7 @@ export default function Car({car}) {
         <div className="car">
             <div className="car__image">
                 <Link to={`${CARS_ROUTE}${link}`}>
-                    <img src={images[0] || defaultImg} alt={name} />
+                    <img src={images[0].url || defaultImg} alt={name} />
                 </Link>
             </div>
             <div className="car__content">
@@ -35,14 +34,4 @@ export default function Car({car}) {
             </div>
         </div>
     )
-}
-
-Car.propTypes = {
-    car: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        link: PropTypes.string.isRequired,
-        images: PropTypes.arrayOf(PropTypes.string).isRequired,
-        price: PropTypes.number.isRequired,
-        extras: PropTypes.array.isRequired,
-    })
 }

@@ -71,8 +71,8 @@ export default function SingleCar() {
           <h6>Characteristics</h6>
           <div className="automobile__characteristics">
             {
-              characteristics.map((item, index) => {
-                return <p key={index} className='automobile__characteristics-item'>{item}</p>
+              characteristics[0].children.map((item, index) => {
+                return <p key={index} className='automobile__characteristics-item'>{item.children[0].text}</p>
               })
             }
           </div>

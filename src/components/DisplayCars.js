@@ -4,7 +4,7 @@ import Car from './Car'
 export default function DisplayCars({cars = []}) {
     return (
         <>
-            {cars.map(item => <Car key={item.id} car={item} />)}
+            {cars.map(item => <Car key={item.uid} car={item} />)}
         </>
     )
 }
